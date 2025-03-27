@@ -5,13 +5,10 @@
   "description": "A simple note-taking tool for Sunflower Land. Attach a persistent notepad beside Farm Island to jot down reminders and strategies.",
   "content_scripts": [
     {
-      "matches": [
-        "*://*/*"
-      ],
-      "js": [
-        "content.js"
-      ],
+      "matches": ["https://sunflower-land.com/*"],
+      "js": ["content.js"],
       "run_at": "document_idle"
     }
-  ]
+  ],
+  "host_permissions": ["https://sunflower-land.com/*"]
 }
