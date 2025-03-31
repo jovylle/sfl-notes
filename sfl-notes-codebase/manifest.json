@@ -1,17 +1,21 @@
 {
   "manifest_version": 3,
-  "name": "Sunflower Land – Farm Notes",
+  "name": "Sunflower Land – Farm Notes vAI 1.0",
   "version": "1.0",
-  "description": "A simple note-taking tool for Sunflower Land. Attach a persistent notepad beside Farm Island to jot down reminders and strategies.",
+  "description": "Draggable notes panel for Sunflower Land with persistent position",
   "content_scripts": [
     {
       "matches": [
-        "*://*/*"
+        "*://sunflower-land.com/*",
+        "*://*.sunflower-land.com/*"
       ],
       "js": [
         "content.js"
       ],
       "run_at": "document_idle"
     }
+  ],
+  "permissions": [
+    "storage"
   ]
 }
