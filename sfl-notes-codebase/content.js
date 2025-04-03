@@ -14,7 +14,7 @@
         position: 'fixed',
         width: '350px',
         height: '500px',
-        fontSize: '1.5rem',
+        fontSize: '1.2rem',
         backgroundColor: 'rgba(255, 255, 255, 0.9)',
         border: '1px solid #ccc',
         borderRadius: '5px',
