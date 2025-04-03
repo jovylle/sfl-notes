@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Sunflower Land – Farm Notes",
   "version": "1.5",
-  "description": "A simple note-taking tool for Sunflower Land. Attach a persistent notepad beside Farm Island to jot down reminders and strategies.",
+  "description": "A simple note-taking tool for Sunflower Land. Attach a persistent notepad beside Farm Island to jot down reminders and strategies. This doesn't violate any game rules.",
   "content_scripts": [
     {
       "matches": [
