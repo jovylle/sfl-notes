@@ -2,29 +2,27 @@
   const domainKey = `autosave_notes_${window.location.hostname}`;
   let note = null;
 
-  const checkAndAttachNote = () => {
+  const syncNoteToImage = () => {
     const image = document.querySelector('img[src="https://sunflower-land.com/game-assets/land/mushroom_island.png"]');
 
+    // Create note if needed
     if (image && !note) {
       note = document.createElement('textarea');
       note.placeholder = 'Write your notes here...';
-      note.dataset.note = 'mushroom';
 
       Object.assign(note.style, {
+        position: 'fixed',
         width: '350px',
         height: '500px',
         fontSize: '1.5rem',
-        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
         border: '1px solid #ccc',
         borderRadius: '5px',
-        zIndex: '10',
-        outline: 'none',
+        zIndex: '9',
         padding: '10px',
         resize: 'both',
-        opacity: '0.8',
-        position: 'absolute',
-        left: '70px',
-        top: '0',
+        opacity: '0.95',
+        pointerEvents: 'auto',
       });
 
       note.value = localStorage.getItem(domainKey) || '';
@@ -38,7 +36,7 @@
       });
 
       note.addEventListener('blur', () => {
-        note.style.opacity = '0.8';
+        note.style.opacity = '0.9';
       });
 
       document.addEventListener('click', (e) => {
@@ -47,15 +45,24 @@
         }
       });
 
-      image.parentNode.appendChild(note);
+      document.body.appendChild(note);
     }
 
-    // Remove the note if image is gone
+    // Remove if image disappeared
     if (!image && note) {
       note.remove();
       note = null;
     }
+
+    // If both exist, follow the image smoothly
+    if (image && note) {
+      const rect = image.getBoundingClientRect();
+      note.style.left = `${rect.right - 50}px`;
+      note.style.top = `${rect.top}px`;
+    }
+
+    requestAnimationFrame(syncNoteToImage);
   };
 
-  setInterval(checkAndAttachNote, 500); // Check every 500ms
+  syncNoteToImage(); // Start the animation loop
 })();
