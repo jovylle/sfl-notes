@@ -1,5 +1,5 @@
 (() => {
-  // Definir waitForElement primero
+  // Definir waitForElement primero (Mantener tu implementación)
   const waitForElement = (selector, callback) => {
     const observer = new MutationObserver(() => {
       const target = document.querySelector(selector);
@@ -11,7 +11,7 @@
     observer.observe(document.body, { childList: true, subtree: true });
   };
 
-  // Resto del c贸digo
+  // Resto del código (Tu versión con mejoras de master)
   const domainKey = `autosave_notes_${window.location.hostname}`;
   const positionKey = `notes_position_${window.location.hostname}`;
   const stateKey = `notes_state_${window.location.hostname}`;
@@ -21,7 +21,7 @@
   let isDragging = false;
   let offsetX, offsetY;
 
-  // Cargar estado guardado o usar valores por defecto
+  // Cargar estado guardado (Mantener tu lógica)
   const loadSavedState = () => {
     const savedState = localStorage.getItem(stateKey);
     return savedState ? JSON.parse(savedState) : {
@@ -31,20 +31,20 @@
     };
   };
 
-  // Guardar estado actual
+  // Guardar estado actual (Mantener tu lógica)
   const saveState = (state) => {
     localStorage.setItem(stateKey, JSON.stringify(state));
   };
 
-  // Crear bot贸n de toggle
+  // Crear botón de toggle (Mantener tu implementación + mejoras de master)
   const createToggleButton = () => {
     const savedState = loadSavedState();
     
     toggleButton = document.createElement('button');
     toggleButton.id = 'notes-toggle-btn';
-    toggleButton.textContent = savedState.visible ? '馃摑 Hide Notes' : '馃摑 Show Notes';
+    toggleButton.textContent = savedState.visible ? '?? Hide Notes' : '?? Show Notes';
     
-    // Estilos del bot贸n
+    // Estilos del botón (Tus estilos)
     Object.assign(toggleButton.style, {
       position: 'fixed',
       left: `${savedState.x}px`,
@@ -62,7 +62,7 @@
       userSelect: 'none'
     });
 
-    // Eventos para arrastrar
+    // Eventos para arrastrar (Mantener tu lógica)
     toggleButton.addEventListener('mousedown', (e) => {
       isDragging = true;
       offsetX = e.clientX - toggleButton.getBoundingClientRect().left;
@@ -79,14 +79,12 @@
       toggleButton.style.left = `${x}px`;
       toggleButton.style.top = `${y}px`;
       
-      // Actualizar posici贸n de la nota
       updateNotePosition();
     });
 
     document.addEventListener('mouseup', () => {
       if (isDragging) {
         isDragging = false;
-        // Guardar nueva posici贸n
         saveState({
           visible: !textarea.style.display || textarea.style.display === 'block',
           x: parseInt(toggleButton.style.left),
@@ -95,13 +93,13 @@
       }
     });
 
-    // Evento para mostrar/ocultar
+    // Evento para mostrar/ocultar (Mantener tu lógica)
     toggleButton.addEventListener('click', (e) => {
       if (isDragging) return;
       
       const isVisible = textarea.style.display !== 'none';
       textarea.style.display = isVisible ? 'none' : 'block';
-      toggleButton.textContent = isVisible ? '馃摑 Show Notes' : '馃摑 Hide Notes';
+      toggleButton.textContent = isVisible ? '?? Show Notes' : '?? Hide Notes';
       
       saveState({
         visible: !isVisible,
@@ -114,13 +112,14 @@
     return toggleButton;
   };
 
-  // Crear 谩rea de notas
+  // Crear área de notas (Combinar ambas versiones)
   const createNotesArea = () => {
     const savedState = loadSavedState();
     
     textarea = document.createElement('textarea');
     textarea.placeholder = 'Write your Sunflower Land notes here...';
 
+    // Tus estilos + mejoras de interacción de master
     Object.assign(textarea.style, {
       position: 'fixed',
       width: '350px',
@@ -134,22 +133,39 @@
       padding: '15px',
       resize: 'vertical',
       boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-      display: savedState.visible ? 'block' : 'none'
+      display: savedState.visible ? 'block' : 'none',
+      opacity: '0.95', // Mejora de master
+      pointerEvents: 'auto' // Mejora de master
     });
 
-    // Cargar notas guardadas
+    // Cargar notas guardadas (Tu lógica)
     textarea.value = localStorage.getItem(domainKey) || '';
 
-    // Guardar autom谩ticamente
+    // Guardar automáticamente (Tu lógica)
     textarea.addEventListener('input', () => {
       localStorage.setItem(domainKey, textarea.value);
+    });
+
+    // Mejoras de interacción de master
+    textarea.addEventListener('focus', () => {
+      textarea.style.opacity = '1';
+    });
+
+    textarea.addEventListener('blur', () => {
+      textarea.style.opacity = '0.9';
+    });
+
+    document.addEventListener('click', (e) => {
+      if (e.target !== textarea) {
+        textarea?.blur();
+      }
     });
 
     document.body.appendChild(textarea);
     return textarea;
   };
 
-  // Actualizar posici贸n de la nota (debajo del bot贸n)
+  // Actualizar posición de la nota (Mantener tu lógica)
   const updateNotePosition = () => {
     if (!toggleButton || !textarea) return;
     const buttonRect = toggleButton.getBoundingClientRect();
@@ -157,20 +173,16 @@
     textarea.style.top = `${buttonRect.bottom + 10}px`;
   };
 
-  // Inicializaci贸n
+  // Inicialización (Mantener tu lógica de detección)
   const init = () => {
     waitForElement('img[src="https://sunflower-land.com/game-assets/land/mushroom_island.png"]', () => {
       createToggleButton();
       createNotesArea();
       updateNotePosition();
       
-      // Actualizar posici贸n al redimensionar
-      window.addEventListener('resize', () => {
-        updateNotePosition();
-      });
+      window.addEventListener('resize', updateNotePosition);
     });
   };
 
-  // Iniciar la extensi贸n
   init();
 })();

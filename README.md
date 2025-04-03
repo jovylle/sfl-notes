@@ -25,4 +25,5 @@ To distribute or upload to the **Chrome Web Store**, you need to **zip** the ext
 
 ### **Using PowerShell (Windows)**
 ```powershell
-Compress-Archive -Path * -DestinationPath farm-notes.zip
+$timestamp = Get-Date -Format "yyyy-MM-dd_HH-mm"
+Compress-Archive -Path sfl-notes-codebase -DestinationPath "farm-notes-$timestamp.zip"

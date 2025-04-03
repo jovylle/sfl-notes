@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Sunflower Land – Farm Notes vAI 1.0",
   "version": "1.0",
-  "description": "Draggable notes panel for Sunflower Land with persistent position",
+  "description": "Draggable notes panel for Sunflower Land with persistent position. Jot down reminders and strategies.",
   "content_scripts": [
     {
       "matches": [
@@ -11,11 +11,11 @@
       ],
       "js": [
         "content.js"
-      ],
-      "run_at": "document_idle"
+      ]
     }
   ],
   "permissions": [
     "storage"
-  ]
+  ],
+  "host_permissions": ["https://sunflower-land.com/*"]
 }
