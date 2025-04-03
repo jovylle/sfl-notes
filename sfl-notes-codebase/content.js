@@ -41,7 +41,7 @@
 
       document.addEventListener('click', (e) => {
         if (e.target !== note) {
-          note.blur();
+          note?.blur();
         }
       });
 
